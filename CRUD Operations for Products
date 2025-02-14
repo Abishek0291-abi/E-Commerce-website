@@ -1,0 +1,16 @@
+Admin can create and manage all products.
+Staff can add products for their assigned vendors.
+Vendors can add and manage their own products.
+Users can only view products.
+
+Sample Product API Endpoints
+  GET /products – View all products with pagination and search.
+  POST /products – Admin/Staff/Vendor create a product.
+  PUT /products/{id} – Update product details (admin, staff, vendor).
+  DELETE /products/{id} – Delete a product (admin).
+  GET /products/{id} – View product details (everyone).
+Discount Calculation:
+  The discount is calculated on the fly, not stored in the database:
+
+const discount = ((oldPrice - newPrice) / oldPrice) * 100;
+const discountAmount = oldPrice - newPrice;
