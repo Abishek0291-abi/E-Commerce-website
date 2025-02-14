@@ -1,0 +1,44 @@
+We'll use MySQL as the relational database, but MongoDB could be an alternative for document-based storage.
+
+Tables Overview
+Users Table: Store basic user information, such as email, password, and role.
+Products Table: Store product information, including product details, vendor, pricing, and images.
+Roles Table: Store different user roles (admin, staff, vendor, buyer).
+Product Images Table: Store image URLs linked to the products
+
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    category VARCHAR(100),
+    vendor_id INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    old_price DECIMAL(10,2),
+    start_date DATETIME NOT NULL,
+    expiry_date DATETIME NOT NULL,
+    free_delivery BOOLEAN DEFAULT FALSE,
+    delivery_amount DECIMAL(10,2),
+    UNIQUE (name),
+    FOREIGN KEY (vendor_id) REFERENCES users(id)
+);
+
+CREATE TABLE product_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
