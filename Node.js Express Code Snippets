@@ -1,0 +1,62 @@
+User Authentication (Login & Signup)
+const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { User, Role } = require('./models'); // Sequelize ORM models
+
+const app = express();
+app.use(express.json());
+
+// Signup Route
+app.post('/auth/signup', async (req, res) => {
+    const { email, password, role } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    const userRole = await Role.findOne({ where: { role_name: role } });
+
+    const newUser = await User.create({
+        email,
+        password: hashedPassword,
+        role_id: userRole.id,
+    });
+
+    res.status(201).json({ message: 'User created successfully' });
+});
+
+// Login Route
+app.post('/auth/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign({ id: user.id, role: user.role_id }, 'secretKey', {
+        expiresIn: '1h',
+    });
+
+    res.json({ token });
+});
+Product CRUD (Admin & Vendor)
+
+app.post('/products', isAdmin, async (req, res) => {
+    const { name, description, category, price, old_price, vendor_id } = req.body;
+    const startDate = new Date();
+    const expiryDate = new Date(startDate);
+    expiryDate.setDate(startDate.getDate() + 7); // Product expires after 7 days
+
+    const newProduct = await Product.create({
+        name,
+        description,
+        category,
+        price,
+        old_price,
+        vendor_id,
+        start_date: startDate,
+        expiry_date: expiryDate,
+    });
+
+    res.status(201).json({ product: newProduct });
+});
