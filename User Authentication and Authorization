@@ -1,0 +1,19 @@
+We'll implement JWT-based authentication to manage user sessions and roles.
+
+Signup and Login: Users (buyers, vendors) can sign up, and staff are created by the admin.
+Passwords should be hashed using bcrypt for secure storage.
+On login, a JWT token is returned for authenticated users.
+Authentication Flow
+Signup:
+
+For buyers/vendors: Register their information and assign a role (vendor or user).
+Admin creates staff accounts manually.
+Login:
+
+Users log in with their credentials. If the credentials are valid, a JWT token is generated, containing their role and user details.
+JWT Token:
+The JWT token will include user information and role for authorization checks.
+
+API Endpoints for Authentication
+POST /auth/signup – Register a new user.
+POST /auth/login – Login and generate a token.
