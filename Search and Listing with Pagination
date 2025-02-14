@@ -1,0 +1,10 @@
+Implement a search endpoint that allows filtering products based on parameters like name, category, or vendor.
+Pagination must be implemented on the server-side to handle large datasets.
+
+API for Search and Listing
+  GET /products/search – Search for products based on query parameters (name, category, etc.)
+    Support query parameters for pagination like page and limit.
+Pagination Logic
+In the backend, we can use SQL LIMIT and OFFSET to implement pagination:
+
+SELECT * FROM products LIMIT 10 OFFSET 0;
