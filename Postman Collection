@@ -1,0 +1,7 @@
+ Postman Collection
+A Postman collection will include the following API endpoints:
+
+Authentication: Signup, Login
+Product Management: Create, Read, Update, Delete products
+Search & Pagination: Search products, Filter by category, vendor, etc.
+User-specific routes for buying/viewing products.
