@@ -1,0 +1,2 @@
+Postman Collection Export
+You can export a Postman collection by creating all the above endpoints in Postman and then exporting the collection via File > Export > Collection.
