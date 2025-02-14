@@ -1,0 +1,19 @@
+Role-Based Access Control (RBAC)
+For each role, we will implement middleware to verify their permissions based on their role.
+
+function isAdmin(req, res, next) {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Permission denied' });
+    }
+    next();
+}
+
+function isVendor(req, res, next) {
+    if (req.user.role !== 'vendor') {
+        return res.status(403).json({ message: 'Permission denied' });
+    }
+    next();
+}
+
+// Example for protected routes:
+app.post('/products', isAdmin, createProduct); // Only admin can create products
